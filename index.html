@@ -1,153 +1,308 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Blog Pessoal</title>
+    <title>Meu Blog Pessoal | 2025</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
-        /* Estilos gerais para o corpo da página */
+        /* CSS: Painel de Controle de Cores (Variáveis) */
+        :root {
+            --cor-fundo: #f8f9fa;
+            --cor-texto: #212529;
+            --cor-primaria: #007bff;
+            --cor-superficie: #ffffff;
+            --cor-borda: #dee2e6;
+            --sombra-caixa: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="dark"] {
+            --cor-fundo: #121212;
+            --cor-texto: #e9e9e9;
+            --cor-primaria: #58a6ff;
+            --cor-superficie: #1e1e1e;
+            --cor-borda: #333333;
+            --sombra-caixa: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* CSS: Estilos Gerais e Mobile First */
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
             margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Container principal que centraliza o conteúdo */
         .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-            padding: 0 20px;
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 0;
         }
 
-        /* Estilo do cabeçalho do blog */
         header {
-            background: #333;
-            color: #fff;
-            padding: 1rem 0;
-            text-align: center;
-            border-bottom: #0779e4 3px solid;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--cor-borda);
         }
 
-        /* Estilo para cada artigo (post) do blog */
-        .post {
-            background: #fff;
-            margin-bottom: 20px;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        header h1 {
+            font-size: 1.8em;
+            margin: 0;
         }
 
-        .post h2 {
-            color: #0779e4;
+        /* CSS: Estilo do Interruptor de Tema */
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        .theme-switch {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 50px;
+        }
+        .theme-switch input {
+            display:none;
+        }
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 16px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 16px;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: var(--cor-primaria);
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
         }
         
-        .post-meta {
-            font-size: 0.8em;
-            color: #888;
-            margin-bottom: 10px;
-        }
-
-        /* Estilo do rodapé */
-        footer {
-            text-align: center;
+        /* CSS: Formulário de Novo Post */
+        .post-form {
+            background-color: var(--cor-superficie);
             padding: 20px;
-            margin-top: 30px;
-            background: #333;
-            color: #fff;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid var(--cor-borda);
         }
-        
-        /* Estilo para o botão de adicionar post */
-        #addPostBtn {
+        .post-form h2 {
+            margin-top: 0;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
             display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            background-color: #0779e4;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--cor-borda);
+            border-radius: 5px;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+        }
+        .form-group button {
+            background-color: var(--cor-primaria);
             color: white;
+            padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        .form-group button:hover {
+            opacity: 0.9;
         }
         
-        #addPostBtn:hover {
-            background-color: #0056b3;
+        /* CSS: Estilo dos Posts */
+        .post {
+            background-color: var(--cor-superficie);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--cor-borda);
+            box-shadow: var(--sombra-caixa);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .post h3 {
+            margin-top: 0;
+            color: var(--cor-primaria);
+        }
+        .post-meta {
+            font-size: 0.8em;
+            color: #888;
+            margin-bottom: 15px;
         }
 
+        /* CSS: Rodapé com Redes Sociais */
+        footer {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 40px;
+            border-top: 1px solid var(--cor-borda);
+        }
+        .social-links a {
+            font-size: 1.5em;
+            margin: 0 10px;
+            color: var(--cor-texto);
+            transition: color 0.3s;
+        }
+        .social-links a:hover {
+            color: var(--cor-primaria);
+        }
+
+        /* CSS: Media Query para telas maiores (Desktop) */
+        @media (min-width: 768px) {
+            header h1 {
+                font-size: 2.5em;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <h1>Meu Blog Pessoal</h1>
-            <p>Um diário sobre tecnologia e programação.</p>
-        </div>
-    </header>
-    
-    <main id="posts-container" class="container">
-        <article class="post">
-            <h2>Meu Primeiro Post</h2>
-            <p class="post-meta">Publicado em 07 de setembro de 2025 por Parceiro de Programação</p>
-            <p>
-                Bem-vindo ao meu novo blog! Este é o primeiro post, criado inteiramente em um único arquivo HTML. 
-                Aqui, a estrutura (HTML), o estilo (CSS) e a interatividade (JavaScript) vivem todos juntos.
-                É uma ótima maneira de criar sites simples e rápidos de hospedar.
-            </p>
-        </article>
+    <div class="container">
+        <header>
+            <h1>Meu Diário Digital</h1>
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider round"></div>
+                </label>
+            </div>
+        </header>
 
-        <article class="post">
-            <h2>O Poder do CSS</h2>
-             <p class="post-meta">Publicado em 06 de setembro de 2025 por Parceiro de Programação</p>
-            <p>
-                O CSS dentro da tag <code>&lt;style&gt;</code> no cabeçalho deste arquivo é o que dá vida e cor a esta página. 
-                Sem ele, teríamos apenas texto preto em um fundo branco. Ele controla tudo, desde as cores e fontes
-                até o layout dos elementos na página.
-            </p>
-        </article>
-    </main>
+        <section class="post-form">
+            <h2>Criar Nova Publicação</h2>
+            <form id="newPostForm">
+                <div class="form-group">
+                    <label for="postTitle">Título</label>
+                    <input type="text" id="postTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="postContent">Conteúdo</label>
+                    <textarea id="postContent" rows="5" required></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Publicar</button>
+                </div>
+            </form>
+        </section>
 
-    <button id="addPostBtn">Adicionar Post de Exemplo</button>
+        <main id="posts-container">
+            <article class="post">
+                <h3>Bem-vindo(a) ao Meu Novo Blog!</h3>
+                <p class="post-meta">Publicado em 10 de setembro de 2025</p>
+                <p>Esta é a nova versão do meu blog, agora com um visual moderno, modo escuro e a capacidade de adicionar novos posts dinamicamente. Use o formulário acima para criar sua primeira publicação!</p>
+            </article>
+        </main>
 
-    <footer>
-        <p>&copy; 2025 Meu Blog Pessoal</p>
-    </footer>
+        <footer>
+            <div class="social-links">
+                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>&copy; 2025 - Seu Nome Aqui</p>
+        </footer>
+    </div>
 
     <script>
-        // Pega a referência do botão e do container de posts no HTML
-        const addPostBtn = document.getElementById('addPostBtn');
+        // --- JAVASCRIPT: LÓGICA DO MODO ESCURO ---
+        const themeSwitch = document.getElementById('checkbox');
+        const currentTheme = localStorage.getItem('theme');
+
+        // Função para aplicar o tema
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            if (theme === 'dark') {
+                themeSwitch.checked = true;
+            } else {
+                themeSwitch.checked = false;
+            }
+        }
+
+        // Verifica se já existe um tema salvo no navegador
+        if (currentTheme) {
+            setTheme(currentTheme);
+        } else {
+            // Se não, usa o tema claro como padrão
+            setTheme('light');
+        }
+
+        // "Ouvinte" para o clique no interruptor
+        themeSwitch.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                setTheme('dark');
+            } else {
+                setTheme('light');
+            }
+        });
+
+        // --- JAVASCRIPT: LÓGICA DE CRIAÇÃO DE POSTS ---
+        const postForm = document.getElementById('newPostForm');
         const postsContainer = document.getElementById('posts-container');
-        
-        let postCount = 0; // Contador para novos posts
 
-        // Adiciona um "ouvinte de evento" ao botão. A função dentro dele será executada quando o botão for clicado.
-        addPostBtn.addEventListener('click', function() {
-            postCount++;
+        // "Ouvinte" para o envio do formulário
+        postForm.addEventListener('submit', (e) => {
+            // Previne o comportamento padrão do formulário (que é recarregar a página)
+            e.preventDefault();
+
+            // 1. Pega os valores dos campos
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postContent').value;
             
-            // 1. Cria os novos elementos HTML para o post
-            const newArticle = document.createElement('article');
-            newArticle.className = 'post'; // Adiciona a classe CSS para estilização
+            // 2. Cria o novo elemento de post
+            const newPost = document.createElement('article');
+            newPost.classList.add('post');
 
-            const newTitle = document.createElement('h2');
-            newTitle.textContent = 'Post Adicionado via JavaScript ' + postCount;
+            const postDate = new Date().toLocaleDateString('pt-BR', {
+                day: 'numeric', month: 'long', year: 'numeric'
+            });
+
+            // 3. Monta o HTML interno do novo post
+            newPost.innerHTML = `
+                <h3>${title}</h3>
+                <p class="post-meta">Publicado em ${postDate}</p>
+                <p>${content.replace(/\n/g, '<br>')}</p>
+            `;
             
-            const newMeta = document.createElement('p');
-            newMeta.className = 'post-meta';
-            newMeta.textContent = 'Publicado agora mesmo!';
-
-            const newParagraph = document.createElement('p');
-            newParagraph.textContent = 'Este post foi gerado e inserido na página dinamicamente usando JavaScript. Isso mostra como podemos manipular o conteúdo da página sem precisar recarregá-la.';
-
-            // 2. Monta a estrutura do novo post
-            newArticle.appendChild(newTitle);
-            newArticle.appendChild(newMeta);
-            newArticle.appendChild(newParagraph);
+            // 4. Adiciona o novo post no topo da lista
+            postsContainer.prepend(newPost);
             
-            // 3. Adiciona o novo post ao container principal, antes do primeiro post existente
-            postsContainer.prepend(newArticle);
+            // 5. Limpa os campos do formulário
+            postForm.reset();
         });
     </script>
 </body>
