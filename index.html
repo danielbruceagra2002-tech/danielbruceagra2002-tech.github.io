@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Blog Pessoal</title>
+
+    <style>
+        /* Estilos gerais para o corpo da página */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* Container principal que centraliza o conteúdo */
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 0 20px;
+        }
+
+        /* Estilo do cabeçalho do blog */
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+            border-bottom: #0779e4 3px solid;
+        }
+
+        /* Estilo para cada artigo (post) do blog */
+        .post {
+            background: #fff;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .post h2 {
+            color: #0779e4;
+        }
+        
+        .post-meta {
+            font-size: 0.8em;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        /* Estilo do rodapé */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            background: #333;
+            color: #fff;
+        }
+        
+        /* Estilo para o botão de adicionar post */
+        #addPostBtn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #0779e4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        #addPostBtn:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Meu Blog Pessoal</h1>
+            <p>Um diário sobre tecnologia e programação.</p>
+        </div>
+    </header>
+    
+    <main id="posts-container" class="container">
+        <article class="post">
+            <h2>Meu Primeiro Post</h2>
+            <p class="post-meta">Publicado em 07 de setembro de 2025 por Parceiro de Programação</p>
+            <p>
+                Bem-vindo ao meu novo blog! Este é o primeiro post, criado inteiramente em um único arquivo HTML. 
+                Aqui, a estrutura (HTML), o estilo (CSS) e a interatividade (JavaScript) vivem todos juntos.
+                É uma ótima maneira de criar sites simples e rápidos de hospedar.
+            </p>
+        </article>
+
+        <article class="post">
+            <h2>O Poder do CSS</h2>
+             <p class="post-meta">Publicado em 06 de setembro de 2025 por Parceiro de Programação</p>
+            <p>
+                O CSS dentro da tag <code>&lt;style&gt;</code> no cabeçalho deste arquivo é o que dá vida e cor a esta página. 
+                Sem ele, teríamos apenas texto preto em um fundo branco. Ele controla tudo, desde as cores e fontes
+                até o layout dos elementos na página.
+            </p>
+        </article>
+    </main>
+
+    <button id="addPostBtn">Adicionar Post de Exemplo</button>
+
+    <footer>
+        <p>&copy; 2025 Meu Blog Pessoal</p>
+    </footer>
+
+    <script>
+        // Pega a referência do botão e do container de posts no HTML
+        const addPostBtn = document.getElementById('addPostBtn');
+        const postsContainer = document.getElementById('posts-container');
+        
+        let postCount = 0; // Contador para novos posts
+
+        // Adiciona um "ouvinte de evento" ao botão. A função dentro dele será executada quando o botão for clicado.
+        addPostBtn.addEventListener('click', function() {
+            postCount++;
+            
+            // 1. Cria os novos elementos HTML para o post
+            const newArticle = document.createElement('article');
+            newArticle.className = 'post'; // Adiciona a classe CSS para estilização
+
+            const newTitle = document.createElement('h2');
+            newTitle.textContent = 'Post Adicionado via JavaScript ' + postCount;
+            
+            const newMeta = document.createElement('p');
+            newMeta.className = 'post-meta';
+            newMeta.textContent = 'Publicado agora mesmo!';
+
+            const newParagraph = document.createElement('p');
+            newParagraph.textContent = 'Este post foi gerado e inserido na página dinamicamente usando JavaScript. Isso mostra como podemos manipular o conteúdo da página sem precisar recarregá-la.';
+
+            // 2. Monta a estrutura do novo post
+            newArticle.appendChild(newTitle);
+            newArticle.appendChild(newMeta);
+            newArticle.appendChild(newParagraph);
+            
+            // 3. Adiciona o novo post ao container principal, antes do primeiro post existente
+            postsContainer.prepend(newArticle);
+        });
+    </script>
+</body>
+</html>
